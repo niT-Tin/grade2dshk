@@ -38,7 +38,7 @@ public:
 
     bool delete_by_value(T val, bool(*)(T, T));
 
-    void travel(void (*)(T *));
+    void travel(void (*)(T));
 
 private:
     void resize(int);
@@ -192,8 +192,10 @@ bool MyArray<T>::delete_item(int pos) {
 
 // 将指定函数作用到整个结构
 template<class T>
-void MyArray<T>::travel(void (*apply)(T *)) {
-    apply(this->node);
+void MyArray<T>::travel(void (*apply)(T)) {
+
+    for (int i = 0; i < this->len; i++)
+        apply(this->node[i]);
 }
 
 #endif //FIRST_CLION_MYARRAY_H
