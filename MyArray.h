@@ -6,6 +6,7 @@
 #ifndef FIRST_CLION_MYARRAY_H
 #define FIRST_CLION_MYARRAY_H
 #define INIT_SPACE 5
+#include <cstring>
 
 using namespace std;
 
@@ -14,6 +15,7 @@ class MyArray {
 public:
     MyArray() {
         node = static_cast<T *> (new T[INIT_SPACE * sizeof(T)]);/*( malloc(INIT_SPACE * sizeof(T)))*/;
+        this->init_array();
         this->cap = INIT_SPACE;
     }
 
@@ -41,6 +43,8 @@ public:
     void travel(void (*)(T));
 
 private:
+    void init_array();
+
     void resize(int);
 
     auto my_realloc(T *s, int) -> decltype(s);
@@ -53,6 +57,13 @@ private:
 //
 // Created by liuze on 2021/9/30.
 //
+
+template<class T>
+void MyArray<T>::init_array()
+{
+    memset(this->node, 0, sizeof(T));
+}
+
 
 template<class T>
 auto MyArray<T>::my_realloc(T *src, int size) -> decltype(src) {
