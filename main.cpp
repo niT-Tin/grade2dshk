@@ -6,6 +6,9 @@
 
 using namespace std;
 
+bool compare(int, int);
+void visit(int);
+
 int main(void)
 {
     cout << "Hello World" << endl;
@@ -51,5 +54,26 @@ int main(void)
     test1.get_last_item(t1);
     cout << "last = " << t1 << endl;
 
+    test1.delete_by_value(a, compare);
+
+
+    cout << "======================" << endl;
+    test1.get_last_item(t1);
+    cout << "last = " << t1 << endl;
+
+
+    cout << "======================" << endl;
+    test1.travel(visit);
+
     return 0;
+}
+
+bool compare(int a, int b)
+{
+    return a == b;
+}
+
+void visit(int t)
+{
+    cout << "t = " << t << endl;
 }
