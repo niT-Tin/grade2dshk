@@ -161,7 +161,7 @@ void MyArray<T>::insert_item_by_index(int pos, T &val) {
 template<class T>
 bool MyArray<T>::delete_by_value(T val, bool(*c)(T, T)) {
     // 判断len是否已经超过cap
-    if (this->len < this->cap)
+    if (this->len > this->cap)
         // 如果成立则直接返回false
         return false;
     // 循环找出与提供值相等的元素
