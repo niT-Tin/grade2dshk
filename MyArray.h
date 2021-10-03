@@ -95,7 +95,7 @@ void MyArray<T>::resize(int size) {
 template<class T>
 void MyArray<T>::destroy_whole_array() {
     // 释放节点指针指向的内存
-    free(this->node);
+    delete[] this->node;
 }
 
 
