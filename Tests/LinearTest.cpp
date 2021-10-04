@@ -2,7 +2,7 @@
 // Created by liuze on 2021/9/30.
 //
 #include <iostream>
-#include "MyArray.h"
+#include "../Linear/MyArray.h"
 
 using namespace std;
 
