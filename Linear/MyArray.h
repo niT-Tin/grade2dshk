@@ -26,11 +26,11 @@ public:
 //    void init_array();
     void destroy_whole_array();
 
-    void search_item_by_index(int, T &);
+    void search_item_by_index(int, T &) const;
 
-    void get_top_item(T &);
+    void get_top_item(T &) const;
 
-    void get_last_item(T &);
+    void get_last_item(T &) const;
 
     void insert_item_by_index(int, T &);
 
@@ -112,7 +112,7 @@ void MyArray<T>::destroy_whole_array() {
 
 // 根据下标查找元素
 template<class T>
-void MyArray<T>::search_item_by_index(int pos, T &val) {
+void MyArray<T>::search_item_by_index(int pos, T &val) const {
     // 判断下标是否越界
     if (pos < 0 || pos > this->len)
         return;
@@ -123,7 +123,7 @@ void MyArray<T>::search_item_by_index(int pos, T &val) {
 
 // 获取结构最后一个元素
 template<class T>
-void MyArray<T>::get_last_item(T &val) {
+void MyArray<T>::get_last_item(T &val) const {
     // 获取下标为len - 1的元素
 //    cout << "this->len = " << this->len << endl;
     val = this->node[this->len - 1];
@@ -132,7 +132,7 @@ void MyArray<T>::get_last_item(T &val) {
 
 // 获得顶部（结构最开始的）元素
 template<class T>
-void MyArray<T>::get_top_item(T &val) {
+void MyArray<T>::get_top_item(T &val) const {
     // 获得下标为0的元素
     val = this->node[0];
 }
