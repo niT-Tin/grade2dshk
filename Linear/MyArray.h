@@ -7,6 +7,7 @@
 #define FIRST_CLION_MYARRAY_H
 #define INIT_SPACE 5
 #include <cstring>
+#include "../Utils/utils.h"
 
 using namespace std;
 
@@ -47,7 +48,6 @@ private:
 
     void resize(int);
 
-    auto my_realloc(T *s, int) -> decltype(s);
 
     T *node;
     int cap{}; // 当前链式结构容量
@@ -65,33 +65,12 @@ void MyArray<T>::init_array()
 }
 
 
-template<class T>
-auto MyArray<T>::my_realloc(T *src, int size) -> decltype(src) {
-
-    // 申请新的内存空间
-    T *t = new T[size];
-
-    // 将src指向的元素复制到新的空间
-    for (int i = 0; i < this->len; i++)
-        t[i] = src[i];
-
-    /* 此处存在隐患，src与this->node指向同一块内存，但是此处delete掉了src,如果再对
-     * this->node进行delete操作则会出现错误。
-     * 目前暂时忽略这个隐患
-    */
-    // 释放src指向的内存空间
-    delete[] src;
-
-    // 返回指向新内存空间的指针
-    return t;
-}
-
 // 调整结构内存大小(此处只增加容量)
 template<class T>
 void MyArray<T>::resize(int size) {
     T *t; // 声明暂时元素指针
     // 如果分配内存空间失败，则直接返回
-    if (!(t = this->my_realloc(this->node, size))) {
+    if (!(t = my_realloc(this->node, size, this->len))) {
         cout << "get memory failed" << endl;
         return;
     }
