@@ -8,7 +8,9 @@
 template<class T>
 class MyChain {
 public:
-    MyChain(){}
+    MyChain(){
+        // TODO 初始化内存空间
+    }
     ~MyChain(){}
     void travel(void(*)(T));
     void insert_node_by_index(int, T);
@@ -42,11 +44,45 @@ void MyChain<T>::travel(void (*apply)(T t))
     }
 }
 
+
 // 根据下标插入节点
 template<class T>
 void MyChain<T>::insert_node_by_index(int index, T d)
 {
-    
+    // 声明临时指针
+    MyChain<T> *t, *cur;
+    // 申请临时节点内存
+    cur = new MyChain<T>();
+    // 将下一个节点指针设置为空指针
+    cur->next = nullptr;
+    // 获取头节点指针
+    t = this->L->next;
+    // 用于计数节点
+    int i = 0;
+    // 遍历节点查找插入位置
+    while(t && i++ < index - 1)
+        t = t->next;
+    // 如果t为空指针表示已经走到链表末尾
+    if (t->next == nullptr)
+    {
+        // 将插入数据赋值给成员变量
+        cur->data = d;
+        // 将链表的末尾指针指向当前节点
+        t->next = cur;
+        // 将链表指针末尾指针设置为空指针
+        cur->next = nullptr;
+        // 如果走到下标位置的前一个
+    }else if (i == index)
+    {
+        // 数据赋值给当前节点
+        cur->data = d;
+        // 将当前节点的next指针指向原先下一个节点
+        cur->next = t->next;
+        // 将原先节点的next指针指向当前节点
+        t->next = cur;
+    }
+    // 节点数增加1
+    this->len++;
 }
 
 
@@ -54,7 +90,8 @@ void MyChain<T>::insert_node_by_index(int index, T d)
 template<class T>
 void MyChain<T>::insert_node(T d)
 {
-    
+    // 在末尾插入节点数据,插入位置为len - 1
+    this->insert_node_by_index(this->len--, d);
 }
 
 
@@ -62,7 +99,20 @@ void MyChain<T>::insert_node(T d)
 template<class T>
 void MyChain<T>::search_node_by_index(int index, T &d) const
 {
-    
+    // 节点计数器
+    int i = 0;
+    // 声明临时指针
+    MyChain<T> *t;
+    // 获取第一个节点指针
+    t = this->L->next;
+    // 遍历列表
+    while(t && i++ < index)
+        t = t->next;
+    // 如果t等于空指针直接返回
+    if (t == nullptr)
+        return;
+    // 获取数据
+    d = t->data;
 }
 
 
@@ -70,7 +120,24 @@ void MyChain<T>::search_node_by_index(int index, T &d) const
 template<class T>
 void MyChain<T>::delete_node_by_index(int pos)
 {
-    
+        // 节点计数器
+        int i = 0;
+        // 声明临时指针
+        MyChain<T> *t;
+        // 获取第一个节点指针
+        t = this->L->next;
+        // 遍历链表找到pos前一个节点
+        while(t && i++ < pos - 1)
+            t = t->next;
+        // 如果走到最后直接返回
+        if (t == nullptr)
+            return;
+        // 获取t的下一个节点指针
+        auto *tmp = t->next;
+        // 将当前下一个节点指针指向下一个的下一个节点
+        t->next = t->next->next;
+        // 释放当前节点
+        delete tmp;
 }
 
 
@@ -78,7 +145,23 @@ void MyChain<T>::delete_node_by_index(int pos)
 template<class T>
 void MyChain<T>::delete_node_by_value(T d, bool(*c)(T, T))
 {
-    
+    // 声明临时指针
+    MyChain<T> *t;
+    // 获取头节点指针
+    t = this->L->next;
+    while(t)
+    {
+        // 判断节点数据是否与传入数据相等
+        if (c(t->data, d))
+        {
+            auto *tmp = t;
+            // TODO 释放节点那内存
+            // TODO 解决上一个节点指针无法释放, 变成野指针的问题
+
+        }
+        // 将节点向后推移
+        t = t->next;
+    }
 }
 
 
@@ -86,7 +169,18 @@ void MyChain<T>::delete_node_by_value(T d, bool(*c)(T, T))
 template<class T>
 void MyChain<T>::destroy_whole_list()
 {
-
+    // 获取链表头指针
+    auto *t = this->L;
+    // 遍历列表
+    while(t)
+    {
+        // 获取当前节点指针
+        auto *tmp = t;
+        // 将节点后移
+        t = t->next;
+        // 释放当前节点内存
+        delete tmp;
+    }
 }
 
 #endif //GRADE2DSHK_MYCHAIN_H
