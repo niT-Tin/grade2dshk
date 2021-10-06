@@ -7,7 +7,7 @@
 using namespace std;
 
 bool compare(int, int);
-void visit(int);
+void visit(const int&);
 
 int main(void)
 {
@@ -73,7 +73,7 @@ bool compare(int a, int b)
     return a == b;
 }
 
-void visit(int t)
+void visit(const int &t)
 {
     cout << "t = " << t << endl;
 }
