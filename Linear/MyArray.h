@@ -5,7 +5,7 @@
 
 #ifndef FIRST_CLION_MYARRAY_H
 #define FIRST_CLION_MYARRAY_H
-#define INIT_SPACE 5
+#define INIT_SPACE_ARRAY_SIZE 5
 #include <cstring>
 #include "../Utils/utils.h"
 
@@ -15,9 +15,9 @@ template<class T>
 class MyArray {
 public:
     MyArray() {
-        node = static_cast<T *> (new T[INIT_SPACE * sizeof(T)]);/*( malloc(INIT_SPACE * sizeof(T)))*/;
+        node = static_cast<T *> (new T[INIT_SPACE_ARRAY_SIZE * sizeof(T)]);/*( malloc(INIT_SPACE * sizeof(T)))*/;
         this->init_array();
-        this->cap = INIT_SPACE;
+        this->cap = INIT_SPACE_ARRAY_SIZE;
     }
 
     ~MyArray() {
@@ -41,7 +41,7 @@ public:
 
     bool delete_by_value(T val, bool(*)(T, T));
 
-    void travel(void (*)(T));
+    void travel(void (*)(const T&));
 
 private:
     void init_array();
@@ -182,7 +182,7 @@ bool MyArray<T>::delete_item(int pos) {
 
 // 将指定函数作用到整个结构
 template<class T>
-void MyArray<T>::travel(void (*apply)(T)) {
+void MyArray<T>::travel(void (*apply)(const T&)) {
 
     for (int i = 0; i < this->len; i++)
         apply(this->node[i]);
