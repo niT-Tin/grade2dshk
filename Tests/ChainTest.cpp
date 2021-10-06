@@ -48,7 +48,7 @@ int main(void)
 
     cout << "================================" << endl;
 
-    dList.insert_node_by_index(2, s2);
+    dList.insert_node_by_index(0, s2);
 
     dList.travel(visit);
 
